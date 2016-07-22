@@ -47,7 +47,7 @@ $.getJSON("src/ct-towns-simple.geojson", function (data) {
   }).addTo(map);
 });
 
-// redlining polygons
+// redlining polygons with fillColor
 $.getJSON("polygons.geojson", function (data) {
   var geoJsonLayer = L.geoJson(data, {
     style: function (feature) {
@@ -73,7 +73,7 @@ $.getJSON("polygons.geojson", function (data) {
   }).addTo(map);
 });
 
-// redlining points with default blue markers
+// redlining points with colored numeric markers; see also style.css 
 $.getJSON("points.geojson", function (data){
   var geoJsonLayer = L.geoJson(data, {
     pointToLayer: function( feature, latlng) {
@@ -96,19 +96,3 @@ $.getJSON("points.geojson", function (data){
     }
   }).addTo(map);
 });
-
-/*
-// FIX NEEDED: display redlining points as numeric markers, but I have errors in my code below
- $.getJSON("points.geojson", function (data) {
-   var geoJsonLayer = L.geoJson(data, {
-       var marker = L.ExtraMarkers(latlng,{
-         icon: 'fa-number',
-         number: feature.properties.name,
-         markerColor: 'blue'
-       });
-       marker.bindPopup(feature.properties.name);
-       return marker;
-     }
-   }).addTo(map);
- });
-*/
