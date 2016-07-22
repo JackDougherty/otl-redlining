@@ -2,15 +2,14 @@
 var map = L.map('map', {
   center: [41.76, -72.69],
   zoom: 12,
+  zoomControl: false, // add later to reposition
   scrollWheelZoom: false
 });
 
-// create custom pane for town layer, set below overlay zIndex 400
+// create custom pane for town layer, set to display below overlay zIndex 400
 map.createPane('towns');
 map.getPane('towns').style.zIndex = 350;
-// map.getPane('towns').style.pointerEvents = 'none';
 
-// Edit links to your GitHub repo and data source credit
 map.attributionControl
 .setPrefix('View <a href="http://github.com/jackdougherty/otl-redlining" target="_blank">sources and code on GitHub</a>, created with <a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
 
@@ -20,7 +19,17 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 
 L.control.scale().addTo(map);
 
-// town outline layer, with custom pane set to lower z-index above
+new L.Control.GeoSearch({
+				provider: new L.GeoSearch.Provider.Google(),
+        position: 'topleft',
+        // showMarker: true
+        // retainZoomLevel: false
+}).addTo(map);
+
+// Reposition zoom control other than default topleft
+L.control.zoom({position: "topright"}).addTo(map);
+
+// town outline layer, with custom pane set to display at lower z-index
 $.getJSON("src/ct-towns-simple.geojson", function (data) {
   var geoJsonLayer = L.geoJson(data, {
     style: function (feature) {
@@ -37,8 +46,6 @@ $.getJSON("src/ct-towns-simple.geojson", function (data) {
     pane: 'towns'
   }).addTo(map);
 });
-
-
 
 // redlining polygons
 $.getJSON("polygons.geojson", function (data) {
@@ -79,29 +86,12 @@ $.getJSON("points.geojson", function (data){
   }).addTo(map);
 });
 
-
-// redlining points WITH PLACEHOLDER SYMBOLS
-// $.getJSON("points.geojson", function (data){
-//   var iconStyle = L.icon({
-//     iconUrl: "src/star-18.png",
-//     iconRetinaUrl: 'src/star-18@2x.png',
-//     iconSize: [18, 18]
-//   });
-//   var geoJsonLayer = L.geoJson(data, {
-//     pointToLayer: function( feature, latlng) {
-//       var marker = L.marker(latlng,{icon: iconStyle});
-//       marker.bindPopup(feature.properties.name);
-//       return marker;
-//     }
-//   }).addTo(map);
-// });
-
-// redlining points, PROBLEM with not reading "number" option for L.ExtraMarkers.icon)
+// FIX NEEDED: display redlining points as numeric markers, but I have errors in my code below
 // $.getJSON("points.geojson", function (data){
 //   var geoJsonLayer = L.geoJson(data, {
 //       var marker = L.ExtraMarkers(latlng,{
 //         icon: 'fa-number',
-//         number: feature.properties.grade,
+//         number: feature.properties.name,
 //         markerColor: 'blue'
 //       });
 //       marker.bindPopup(feature.properties.name);
@@ -109,17 +99,3 @@ $.getJSON("points.geojson", function (data){
 //     }
 //   }).addTo(map);
 // });
-
-
-// var popupText = "<b>" + feature.properties.name + "</b><br />";
-//   //  + "&quot;" + feature.properties.text + "&quot; -- " + feature.properties.date + "<br />"
-//   //  + "<a href='https://jackdougherty.github.io/otl-covenants/pdf/" + feature.properties.name + ".pdf' target='_blank'>View property deed (PDF opens new tab)</a>";
-// layer.bindPopup(popupText);
-
-// places a star on state capital of Hartford, CT
-// var starIcon = L.icon({
-//   iconUrl: 'src/star-18.png',
-//   iconRetinaUrl: 'src/star-18@2x.png',
-//   iconSize: [18, 18]
-// });
-// L.marker([41.7646, -72.6823], {icon: starIcon}).addTo(map);
