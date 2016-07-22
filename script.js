@@ -77,7 +77,18 @@ $.getJSON("polygons.geojson", function (data) {
 $.getJSON("points.geojson", function (data){
   var geoJsonLayer = L.geoJson(data, {
     pointToLayer: function( feature, latlng) {
-      var marker = L.marker(latlng);
+      var colors = {
+        'A': 'green',
+        'B': 'blue',
+        'C': 'yellow',
+        'D': 'red',
+      }
+      var mIcon = L.ExtraMarkers.icon({
+        icon: 'fa-number',
+        number: feature.properties.name,
+        markerColor: colors[feature.properties.grade]
+      });
+      var marker = L.marker(latlng, {icon: mIcon});
       var popupText = "<b>Area " + feature.properties.name + " - " + feature.properties.town + "</b><br />"
          + "<a href='https://jackdougherty.github.io/otl-redlining/pdf/" + feature.properties.name + ".pdf' target='_blank'>Neighborhood report (PDF in new tab)</a>";
       marker.bindPopup(popupText);
@@ -86,16 +97,18 @@ $.getJSON("points.geojson", function (data){
   }).addTo(map);
 });
 
+/*
 // FIX NEEDED: display redlining points as numeric markers, but I have errors in my code below
-// $.getJSON("points.geojson", function (data){
-//   var geoJsonLayer = L.geoJson(data, {
-//       var marker = L.ExtraMarkers(latlng,{
-//         icon: 'fa-number',
-//         number: feature.properties.name,
-//         markerColor: 'blue'
-//       });
-//       marker.bindPopup(feature.properties.name);
-//       return marker;
-//     }
-//   }).addTo(map);
-// });
+ $.getJSON("points.geojson", function (data) {
+   var geoJsonLayer = L.geoJson(data, {
+       var marker = L.ExtraMarkers(latlng,{
+         icon: 'fa-number',
+         number: feature.properties.name,
+         markerColor: 'blue'
+       });
+       marker.bindPopup(feature.properties.name);
+       return marker;
+     }
+   }).addTo(map);
+ });
+*/
