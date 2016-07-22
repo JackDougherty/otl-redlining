@@ -33,44 +33,80 @@ L.control.scale().addTo(map);
 //   }).addTo(map);
 // });
 
-// redlining layer
-$.getJSON("map.geojson", function (data) {
-  geoJsonLayer = L.geoJson(data, {
-    style: style,
-    onEachFeature: onEachFeature
+
+
+// redlining polygons
+$.getJSON("polygons.geojson", function (data) {
+  var geoJsonLayer = L.geoJson(data, {
+    style: function (feature) {
+      var fillColor,
+        grade = feature.properties.grade;
+      if (grade == "A") fillColor = "green";
+      else if (grade == "B") fillColor = "blue";
+      else if (grade == "C") fillColor = "yellow";
+      else if (grade == "D") fillColor = "red";
+      else fillColor = "gray"; // no data
+      return {
+        'color': 'black',
+        'weight': 2,
+        'fillColor': fillColor,
+        'fillOpacity': 0.7
+      }
+    },
+    onEachFeature: function( feature, layer) {
+      var popupText = "<b>" + feature.properties.town + feature.properties.name + "</b>"
+         + "<br />link to come ";
+      layer.bindPopup(popupText);
+    }
   }).addTo(map);
 });
 
+// redlining points WITH PLACEHOLDER SYMBOLS
+$.getJSON("points.geojson", function (data){
+  var iconStyle = L.icon({
+    iconUrl: "src/star-18.png",
+    iconRetinaUrl: 'src/star-18@2x.png',
+    iconSize: [18, 18]
+  });
+  var geoJsonLayer = L.geoJson(data, {
+    pointToLayer: function( feature, latlng) {
+      var marker = L.marker(latlng,{icon: iconStyle});
+      marker.bindPopup(feature.properties.name);
+      return marker;
+    }
+  }).addTo(map);
+});
 
-// $.getJSON('map.geojson', function(data) {
-//   var geojson = L.geoJson(data, {
-//     onEachFeature: function (feature, layer) {
-//       (function(layer, properties) {
-//         // This creates numerical icons to match the ID numbers
-//         // OR remove the next 6 lines for default blue Leaflet markers
-//         var numericMarker = L.ExtraMarkers.icon({
-//           icon: 'fa-number',
-//           number: feature.properties['id'],
-//           markerColor: 'blue'
-//         });
-//         layer.setIcon(numericMarker);
+// redlining points, PROBLEM with line 81 (not reading options for L.ExtraMarkers.icon)
+// $.getJSON("points.geojson", function (data){
+//   var iconStyle = L.ExtraMarkers.icon({
+//     icon: 'fa-number',
+//     number: feature.properties.name,
+//     markerColor: 'blue'
+//   });
+//   var geoJsonLayer = L.geoJson(data, {
+//     pointToLayer: function( feature, latlng) {
+//       var marker = L.marker(latlng,{icon: iconStyle});
+//       marker.bindPopup(feature.properties.name);
+//       return marker;
+//     }
+//   }).addTo(map);
+// });
 
-function onEachFeature(feature, layer) {
-  var popupText = "<b>" + feature.properties.name + "</b><br />";
-    //  + "&quot;" + feature.properties.text + "&quot; -- " + feature.properties.date + "<br />"
-    //  + "<a href='https://jackdougherty.github.io/otl-covenants/pdf/" + feature.properties.name + ".pdf' target='_blank'>View property deed (PDF opens new tab)</a>";
-  layer.bindPopup(popupText);
-}
+// var popupText = "<b>" + feature.properties.name + "</b><br />";
+//   //  + "&quot;" + feature.properties.text + "&quot; -- " + feature.properties.date + "<br />"
+//   //  + "<a href='https://jackdougherty.github.io/otl-covenants/pdf/" + feature.properties.name + ".pdf' target='_blank'>View property deed (PDF opens new tab)</a>";
+// layer.bindPopup(popupText);
 
-function style(feature) {
-  return {
-    fillColor: 'purple',
-    weight: 1,
-    opacity: 1,
-    color: 'black',
-    fillOpacity: 0.7
-  };
-}
+// function style(feature) {
+//   return {
+//     fillColor: 'purple',
+//     weight: 1,
+//     opacity: 1,
+//     color: 'black',
+//     fillOpacity: 0.7
+//   };
+// }
 
 // places a star on state capital of Hartford, CT
 // var starIcon = L.icon({
