@@ -4,9 +4,10 @@ var map = L.map('map', {
   zoom: 12,
   scrollWheelZoom: false
 });
-// // create custom pane for town layer, set below overlay zIndex 400, make non-clickable
-// map.createPane('towns');
-// map.getPane('towns').style.zIndex = 350;
+
+// create custom pane for town layer, set below overlay zIndex 400
+map.createPane('towns');
+map.getPane('towns').style.zIndex = 350;
 // map.getPane('towns').style.pointerEvents = 'none';
 
 // Edit links to your GitHub repo and data source credit
@@ -19,19 +20,23 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 
 L.control.scale().addTo(map);
 
-// town outline layer, with custom pane set to lower non-clickable layer
-// $.getJSON("src/ct-towns-simple.geojson", function (data) {
-//   var geoJsonLayer = L.geoJson(data, {
-//     style: function (feature) {
-//       return {
-//         'color': 'red',
-//         'weight': 2,
-//         fillOpacity: 0
-//       }
-//     },
-//     pane: 'towns'
-//   }).addTo(map);
-// });
+// town outline layer, with custom pane set to lower z-index above
+$.getJSON("src/ct-towns-simple.geojson", function (data) {
+  var geoJsonLayer = L.geoJson(data, {
+    style: function (feature) {
+      return {
+        'color': 'black',
+        'weight': 2,
+        fillOpacity: 0
+      }
+    },
+    onEachFeature: function( feature, layer) {
+      var popupText = "<b>" + feature.properties.town + "</b>";
+      layer.bindPopup(popupText);
+    },
+    pane: 'towns'
+  }).addTo(map);
+});
 
 
 
@@ -61,28 +66,24 @@ $.getJSON("polygons.geojson", function (data) {
   }).addTo(map);
 });
 
-// redlining points WITH PLACEHOLDER SYMBOLS
+// redlining points with default blue markers
 $.getJSON("points.geojson", function (data){
-  var iconStyle = L.icon({
-    iconUrl: "src/star-18.png",
-    iconRetinaUrl: 'src/star-18@2x.png',
-    iconSize: [18, 18]
-  });
   var geoJsonLayer = L.geoJson(data, {
     pointToLayer: function( feature, latlng) {
-      var marker = L.marker(latlng,{icon: iconStyle});
+      var marker = L.marker(latlng);
       marker.bindPopup(feature.properties.name);
       return marker;
     }
   }).addTo(map);
 });
 
-// redlining points, PROBLEM with line 81 (not reading options for L.ExtraMarkers.icon)
+
+// redlining points WITH PLACEHOLDER SYMBOLS
 // $.getJSON("points.geojson", function (data){
-//   var iconStyle = L.ExtraMarkers.icon({
-//     icon: 'fa-number',
-//     number: feature.properties.name,
-//     markerColor: 'blue'
+//   var iconStyle = L.icon({
+//     iconUrl: "src/star-18.png",
+//     iconRetinaUrl: 'src/star-18@2x.png',
+//     iconSize: [18, 18]
 //   });
 //   var geoJsonLayer = L.geoJson(data, {
 //     pointToLayer: function( feature, latlng) {
@@ -92,6 +93,21 @@ $.getJSON("points.geojson", function (data){
 //     }
 //   }).addTo(map);
 // });
+
+// redlining points, PROBLEM with not reading "number" option for L.ExtraMarkers.icon)
+// $.getJSON("points.geojson", function (data){
+//   var geoJsonLayer = L.geoJson(data, {
+//       var marker = L.ExtraMarkers(latlng,{
+//         icon: 'fa-number',
+//         number: feature.properties.grade,
+//         markerColor: 'blue'
+//       });
+//       marker.bindPopup(feature.properties.name);
+//       return marker;
+//     }
+//   }).addTo(map);
+// });
+
 
 // var popupText = "<b>" + feature.properties.name + "</b><br />";
 //   //  + "&quot;" + feature.properties.text + "&quot; -- " + feature.properties.date + "<br />"
