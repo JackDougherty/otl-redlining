@@ -4,9 +4,10 @@ var map = L.map('map', {
   zoom: 12,
   scrollWheelZoom: false
 });
-// // create custom pane for town layer, set below overlay zIndex 400, make non-clickable
-// map.createPane('towns');
-// map.getPane('towns').style.zIndex = 350;
+
+// create custom pane for town layer, set below overlay zIndex 400
+map.createPane('towns');
+map.getPane('towns').style.zIndex = 350;
 // map.getPane('towns').style.pointerEvents = 'none';
 
 // Edit links to your GitHub repo and data source credit
@@ -19,58 +20,109 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 
 L.control.scale().addTo(map);
 
-// town outline layer, with custom pane set to lower non-clickable layer
-// $.getJSON("src/ct-towns-simple.geojson", function (data) {
-//   var geoJsonLayer = L.geoJson(data, {
-//     style: function (feature) {
-//       return {
-//         'color': 'red',
-//         'weight': 2,
-//         fillOpacity: 0
-//       }
-//     },
-//     pane: 'towns'
-//   }).addTo(map);
-// });
-
-// redlining layer
-$.getJSON("map.geojson", function (data) {
-  geoJsonLayer = L.geoJson(data, {
-    style: style,
-    onEachFeature: onEachFeature
+// town outline layer, with custom pane set to lower z-index above
+$.getJSON("src/ct-towns-simple.geojson", function (data) {
+  var geoJsonLayer = L.geoJson(data, {
+    style: function (feature) {
+      return {
+        'color': 'black',
+        'weight': 2,
+        fillOpacity: 0
+      }
+    },
+    onEachFeature: function( feature, layer) {
+      var popupText = "<b>" + feature.properties.town + "</b>";
+      layer.bindPopup(popupText);
+    },
+    pane: 'towns'
   }).addTo(map);
 });
 
 
-// $.getJSON('map.geojson', function(data) {
-//   var geojson = L.geoJson(data, {
-//     onEachFeature: function (feature, layer) {
-//       (function(layer, properties) {
-//         // This creates numerical icons to match the ID numbers
-//         // OR remove the next 6 lines for default blue Leaflet markers
-//         var numericMarker = L.ExtraMarkers.icon({
-//           icon: 'fa-number',
-//           number: feature.properties['id'],
-//           markerColor: 'blue'
-//         });
-//         layer.setIcon(numericMarker);
 
-function onEachFeature(feature, layer) {
-  var popupText = "<b>" + feature.properties.name + "</b><br />";
-    //  + "&quot;" + feature.properties.text + "&quot; -- " + feature.properties.date + "<br />"
-    //  + "<a href='https://jackdougherty.github.io/otl-covenants/pdf/" + feature.properties.name + ".pdf' target='_blank'>View property deed (PDF opens new tab)</a>";
-  layer.bindPopup(popupText);
-}
+// redlining polygons
+$.getJSON("polygons.geojson", function (data) {
+  var geoJsonLayer = L.geoJson(data, {
+    style: function (feature) {
+      var fillColor,
+        grade = feature.properties.grade;
+      if (grade == "A") fillColor = "green";
+      else if (grade == "B") fillColor = "blue";
+      else if (grade == "C") fillColor = "yellow";
+      else if (grade == "D") fillColor = "red";
+      else fillColor = "gray"; // no data
+      return {
+        'color': 'black',
+        'weight': 2,
+        'fillColor': fillColor,
+        'fillOpacity': 0.7
+      }
+    },
+    onEachFeature: function( feature, layer) {
+      var popupText = "<b>" + feature.properties.town + feature.properties.name + "</b>"
+         + "<br />link to come ";
+      layer.bindPopup(popupText);
+    }
+  }).addTo(map);
+});
 
-function style(feature) {
-  return {
-    fillColor: 'purple',
-    weight: 1,
-    opacity: 1,
-    color: 'black',
-    fillOpacity: 0.7
-  };
-}
+// redlining points with default blue markers
+$.getJSON("points.geojson", function (data){
+  var geoJsonLayer = L.geoJson(data, {
+    pointToLayer: function( feature, latlng) {
+      var marker = L.marker(latlng);
+      marker.bindPopup(feature.properties.name);
+      return marker;
+    }
+  }).addTo(map);
+});
+
+
+// redlining points WITH PLACEHOLDER SYMBOLS
+// $.getJSON("points.geojson", function (data){
+//   var iconStyle = L.icon({
+//     iconUrl: "src/star-18.png",
+//     iconRetinaUrl: 'src/star-18@2x.png',
+//     iconSize: [18, 18]
+//   });
+//   var geoJsonLayer = L.geoJson(data, {
+//     pointToLayer: function( feature, latlng) {
+//       var marker = L.marker(latlng,{icon: iconStyle});
+//       marker.bindPopup(feature.properties.name);
+//       return marker;
+//     }
+//   }).addTo(map);
+// });
+
+// redlining points, PROBLEM with not reading "number" option for L.ExtraMarkers.icon)
+// $.getJSON("points.geojson", function (data){
+//   var geoJsonLayer = L.geoJson(data, {
+//       var marker = L.ExtraMarkers(latlng,{
+//         icon: 'fa-number',
+//         number: feature.properties.grade,
+//         markerColor: 'blue'
+//       });
+//       marker.bindPopup(feature.properties.name);
+//       return marker;
+//     }
+//   }).addTo(map);
+// });
+
+
+// var popupText = "<b>" + feature.properties.name + "</b><br />";
+//   //  + "&quot;" + feature.properties.text + "&quot; -- " + feature.properties.date + "<br />"
+//   //  + "<a href='https://jackdougherty.github.io/otl-covenants/pdf/" + feature.properties.name + ".pdf' target='_blank'>View property deed (PDF opens new tab)</a>";
+// layer.bindPopup(popupText);
+
+// function style(feature) {
+//   return {
+//     fillColor: 'purple',
+//     weight: 1,
+//     opacity: 1,
+//     color: 'black',
+//     fillOpacity: 0.7
+//   };
+// }
 
 // places a star on state capital of Hartford, CT
 // var starIcon = L.icon({
