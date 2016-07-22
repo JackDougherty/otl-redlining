@@ -59,8 +59,8 @@ $.getJSON("polygons.geojson", function (data) {
       }
     },
     onEachFeature: function( feature, layer) {
-      var popupText = "<b>" + feature.properties.town + feature.properties.name + "</b>"
-         + "<br />link to come ";
+      var popupText = "<b>Area " + feature.properties.name + " - " + feature.properties.town + "</b><br />"
+         + "<a href='https://jackdougherty.github.io/otl-redlining/pdf/" + feature.properties.name + ".pdf' target='_blank'>Neighborhood report (PDF in new tab)</a>";
       layer.bindPopup(popupText);
     }
   }).addTo(map);
@@ -71,7 +71,9 @@ $.getJSON("points.geojson", function (data){
   var geoJsonLayer = L.geoJson(data, {
     pointToLayer: function( feature, latlng) {
       var marker = L.marker(latlng);
-      marker.bindPopup(feature.properties.name);
+      var popupText = "<b>Area " + feature.properties.name + " - " + feature.properties.town + "</b><br />"
+         + "<a href='https://jackdougherty.github.io/otl-redlining/pdf/" + feature.properties.name + ".pdf' target='_blank'>Neighborhood report (PDF in new tab)</a>";
+      marker.bindPopup(popupText);
       return marker;
     }
   }).addTo(map);
@@ -113,16 +115,6 @@ $.getJSON("points.geojson", function (data){
 //   //  + "&quot;" + feature.properties.text + "&quot; -- " + feature.properties.date + "<br />"
 //   //  + "<a href='https://jackdougherty.github.io/otl-covenants/pdf/" + feature.properties.name + ".pdf' target='_blank'>View property deed (PDF opens new tab)</a>";
 // layer.bindPopup(popupText);
-
-// function style(feature) {
-//   return {
-//     fillColor: 'purple',
-//     weight: 1,
-//     opacity: 1,
-//     color: 'black',
-//     fillOpacity: 0.7
-//   };
-// }
 
 // places a star on state capital of Hartford, CT
 // var starIcon = L.icon({
