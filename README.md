@@ -16,3 +16,4 @@ Leaflet map of HOLC "redlining" security map for Hartford CT area, 1937
 - get update of Leaflet.ExtraMarkers?
 - create an index-frame.html, based on old MAGIC Google version
 http://magic.lib.uconn.edu/otl/doclink_holc.html
+- prep for MAGIC with GA code
