@@ -54,7 +54,7 @@ $.getJSON("polygons.geojson", function (data) {
       var fillColor,
         grade = feature.properties.grade;
       if (grade == "A") fillColor = "green";
-      else if (grade == "B") fillColor = "blue";
+      else if (grade == "B") fillColor = "#3399ff"; // light blue
       else if (grade == "C") fillColor = "yellow";
       else if (grade == "D") fillColor = "red";
       else fillColor = "gray"; // no data
@@ -73,7 +73,7 @@ $.getJSON("polygons.geojson", function (data) {
   }).addTo(map);
 });
 
-// redlining points with colored numeric markers; see also style.css 
+// redlining points with colored numeric markers; see also style.css
 $.getJSON("points.geojson", function (data){
   var geoJsonLayer = L.geoJson(data, {
     pointToLayer: function( feature, latlng) {
