@@ -9,7 +9,8 @@ Leaflet map of HOLC "redlining" security map for Hartford CT area, 1937
 
 ## Credits and dependencies
 - Thanks @ilyankou for styling
-- Thanks UConn MAGIC (http://magic.lib.uconn.edu) for map digitization and the original 2012 map design http://magic.lib.uconn.edu/otl/doclink_holc.html
+- Thanks Samir Gambhir, Kirwan Institute for the Study of Race and Ethnicity, Ohio State University, for geo-referencing and digitizing the original map scans.
+- Thanks UConn MAGIC (http://magic.lib.uconn.edu) for the original 2012 Google Maps design (http://magic.lib.uconn.edu/otl/doclink_holc.html), which is replaced by this 2016 Leaflet map
 - Numeric icon markers by https://github.com/coryasilva/Leaflet.ExtraMarkers with StackOverflow suggestions for modification
 - L.GeoSearch v1.1.0 with Google geocode provider https://github.com/smeijer/L.GeoSearch
 
@@ -18,8 +19,6 @@ Leaflet map of HOLC "redlining" security map for Hartford CT area, 1937
 
 ## Historical sources
 - Residential Security Maps (Hartford-West Hartford and East Hartford) and Area Descriptions for Hartford area, Connecticut, 1937. Home Owners’ Loan Corporation, box 64, City Survey Files, Record Group 195: Records of the Federal Home Loan Bank Board, National Archives II, College Park, Maryland.
-- LINKS to come
-
-## ToDo
-- insert source links to georeferenced TIFF maps, PDF of area descriptions, CSV of area descriptions, and perhaps add sortable html table list view
-- get update of Leaflet.ExtraMarkers?
+- For the full appraisal report (PDF), see the sources folder
+- For geographic data, see polygon.geojson and points.geojson files above, or sources folder for shapefile (.shp) and summary spreadsheet (.csv) and metadata (.xls)
+- See also original 1937 maps, scanned from the National Archives, and georeferenced with MapWarper via NYPL: West Hartford-Hartford (http://mapwarper.net/maps/15096) and East Hartford (http://mapwarper.net/maps/15097)
