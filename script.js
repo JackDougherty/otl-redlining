@@ -6,6 +6,11 @@ var map = L.map('map', {
   scrollWheelZoom: false
 });
 
+// set bounds for geocoder
+var minLatLng = [41.711356, -72.802452];
+var maxLatLng = [41.813259, -72.567709];
+var bounds = L.latLngBounds(minLatLng, maxLatLng);
+
 // create custom pane for town layer, set to display below overlay zIndex 400
 map.createPane('towns');
 map.getPane('towns').style.zIndex = 350;
@@ -19,11 +24,12 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 
 L.control.scale().addTo(map);
 
-new L.Control.GeoSearch({
-				provider: new L.GeoSearch.Provider.Google(),
-        position: 'topleft',
-        // showMarker: true
-        // retainZoomLevel: false
+// Get your own free Mapzen search API key and see geocoder options at https://github.com/mapzen/leaflet-geocoder
+// modified in style.css as leaflet-pelias-control
+L.control.geocoder('search-jBPBt5y', {
+  attribution: null,
+  bounds: bounds,
+  placeholder: 'Search in Hartford area'
 }).addTo(map);
 
 // Reposition zoom control other than default topleft
