@@ -11,11 +11,8 @@ Leaflet map of HOLC "redlining" security map for Hartford CT area, 1937
 - Thanks @ilyankou for styling
 - Thanks Samir Gambhir, Kirwan Institute for the Study of Race and Ethnicity, Ohio State University, for geo-referencing and digitizing the original map scans.
 - Thanks UConn MAGIC (http://magic.lib.uconn.edu) for the original 2012 Google Maps design (http://magic.lib.uconn.edu/otl/doclink_holc.html), which is replaced by this 2016 Leaflet map
+- Mapzen leaflet geocoder to search locations https://github.com/mapzen/leaflet-geocoder
 - Numeric icon markers by https://github.com/coryasilva/Leaflet.ExtraMarkers with StackOverflow suggestions for modification
-- L.GeoSearch v1.1.0 with Google geocode provider https://github.com/smeijer/L.GeoSearch
-
-## Known issues
-- Console warning: Google Maps API warning -  NoApiKeys. Read more at https://developers.google.com/maps/documentation/javascript/error-messages#no-api-keys See L.Geosearch issue submitted to provide option to insert Google API key for searches https://github.com/smeijer/L.GeoSearch/issues/77
 
 ## Historical sources
 - Residential Security Maps (Hartford-West Hartford and East Hartford) and Area Descriptions for Hartford area, Connecticut, 1937. Home Owners’ Loan Corporation, box 64, City Survey Files, Record Group 195: Records of the Federal Home Loan Bank Board, National Archives II, College Park, Maryland.
