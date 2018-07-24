@@ -2,10 +2,12 @@
 Leaflet map of HOLC "redlining" security map for Hartford CT area, 1937
 
 ## Link
-- https://jackdougherty.github.io/otl-redlining/index-frame.html
+- https://ontheline.github.io/otl-redlining/index-frame.html
 
-## Embed shortcode in http://OnTheLine.trincoll.edu
-- [iframe src="https://jackdougherty.github.io/otl-redlining/index.html" width=100% height = 480]
+## Embed in [On The Line book](http://OnTheLine.trincoll.edu)
+```
+<iframe src="https://ontheline.github.io/otl-redlining/index.html" width=100% height = 480></iframe>
+```
 
 ## Credits and dependencies
 - Thanks @ilyankou for styling
