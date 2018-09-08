@@ -1,0 +1,22 @@
+﻿Area,B5,C9
+SecurityGrade,Second,Third
+Location,Hartford,Hartford
+TrendNextDecade,Stable,Stable
+Occupation,Shopkeepers and white collar,Factory workers and clerks
+Estimated Family Income,"$1,800 ","$1,500 "
+Foreign-born families,5%,20%
+Predominant foreign group,Italians,Italians
+NegroYN,No,Yes
+Negroes,0%,1%
+Relief Families,None,Quite a few
+Primary Building: Type,2-Family ,2-Family
+ Construction,Frame,Frame
+ Average Age (yrs),15,20
+ Repair,Good,Fair
+ Occupancy,98%,97%
+ Home ownership rate,85%,85%
+ Price Range (1937),"$7,500 to 12,000","$7,500 to 11,000"
+ Sales Activity,Poor,Almost None
+ Rental Range (1937),$40 to 50/month,$32.5 to 55/month
+ Rental Activity,Good,Good
+Mortgage Availability,Ample,Limited
