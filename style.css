@@ -3,9 +3,14 @@ body {
   padding: 0;
 }
 
+#title {
+  height: 20px;
+  padding: 0px 5px 10px;
+}
+
 #map {
   position: absolute;
-  top: 0;
+  top: 40px;
   bottom: 0;
   right: 0;
   left: 0;

@@ -16,7 +16,7 @@ map.createPane('towns');
 map.getPane('towns').style.zIndex = 350;
 
 map.attributionControl
-.setPrefix('View <a href="http://github.com/jackdougherty/otl-redlining" target="_blank">sources and code on GitHub</a>, created with <a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+.setPrefix('View <a href="http://github.com/ontheline/otl-redlining" target="_blank">sources and code on GitHub</a>, created with <a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
 
 new L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
@@ -73,7 +73,7 @@ $.getJSON("polygons.geojson", function (data) {
     },
     onEachFeature: function( feature, layer) {
       var popupText = "<b>Area " + feature.properties.name + " - " + feature.properties.town + "</b><br />"
-         + "<a href='https://jackdougherty.github.io/otl-redlining/pdf/" + feature.properties.name + ".pdf' target='_blank'>Neighborhood report (PDF in new tab)</a>";
+         + "<a href='https://ontheline.github.io/otl-redlining/pdf/" + feature.properties.name + ".pdf' target='_blank'>Neighborhood report (PDF in new tab)</a>";
       layer.bindPopup(popupText);
     }
   }).addTo(map);
@@ -96,7 +96,7 @@ $.getJSON("points.geojson", function (data){
       });
       var marker = L.marker(latlng, {icon: mIcon});
       var popupText = "<b>Area " + feature.properties.name + " - " + feature.properties.town + "</b><br />"
-         + "<a href='https://jackdougherty.github.io/otl-redlining/pdf/" + feature.properties.name + ".pdf' target='_blank'>Neighborhood report (PDF in new tab)</a>";
+         + "<a href='https://ontheline.github.io/otl-redlining/pdf/" + feature.properties.name + ".pdf' target='_blank'>Neighborhood report (PDF in new tab)</a>";
       marker.bindPopup(popupText);
       return marker;
     }
