@@ -24,12 +24,12 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 
 L.control.scale().addTo(map);
 
-// Get your own free Mapzen search API key and see geocoder options at https://github.com/mapzen/leaflet-geocoder
-// modified in style.css as leaflet-pelias-control
-L.control.geocoder('search-jBPBt5y', {
-  attribution: null,
-  bounds: bounds,
-  placeholder: 'Search in Hartford area'
+L.Control.geocoder({
+  geocoder: L.Control.Geocoder.nominatim({
+    geocodingQueryParams: {
+      countrycodes: 'us'
+    }
+  }),
 }).addTo(map);
 
 // Reposition zoom control other than default topleft
