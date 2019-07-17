@@ -25,6 +25,8 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 L.control.scale().addTo(map);
 
 L.Control.geocoder({
+  position: "topright",
+  placeholder: "Search the Hartford area...",
   geocoder: L.Control.Geocoder.nominatim({
     geocodingQueryParams: {
       countrycodes: 'us'
