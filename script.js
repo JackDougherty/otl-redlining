@@ -24,15 +24,15 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 
 L.control.scale().addTo(map);
 
-L.Control.Geocoder({
-  position: "topright",
-  placeholder: "Search the Hartford area...",
-  geocoder: L.Control.Geocoder.nominatim({
-    geocodingQueryParams: {
-      countrycodes: 'us'
-    }
-  }),
-}).addTo(map);
+// L.Control.Geocoder({
+//   position: "topright",
+//   placeholder: "Search the Hartford area...",
+//   geocoder: L.Control.Geocoder.nominatim({
+//     geocodingQueryParams: {
+//       countrycodes: 'us'
+//     }
+//   }),
+// }).addTo(map);
 
 // Reposition zoom control other than default topleft
 L.control.zoom({position: "topright"}).addTo(map);
