@@ -2,7 +2,6 @@
 var map = L.map('map', {
   center: [41.76, -72.69],
   zoom: 12,
-  zoomControl: false, // add later to reposition
   scrollWheelZoom: false
 });
 
@@ -24,18 +23,16 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 
 L.control.scale().addTo(map);
 
-// L.Control.Geocoder({
-//   position: "topright",
-//   placeholder: "Search the Hartford area...",
-//   geocoder: L.Control.Geocoder.nominatim({
-//     geocodingQueryParams: {
-//       countrycodes: 'us'
-//     }
-//   }),
-// }).addTo(map);
-
-// Reposition zoom control other than default topleft
-L.control.zoom({position: "topright"}).addTo(map);
+var geocoder = L.Control.Geocoder.nominatim({
+  geocodingQueryParams: {
+    countrycodes: 'us'
+  }
+});
+var control = L.Control.geocoder({
+  position: "topright",
+  placeholder: "Search the Hartford area...",
+  geocoder: geocoder
+}).addTo(map);
 
 // town outline layer, with custom pane set to display at lower z-index
 $.getJSON("src/ct-towns-simple.geojson", function (data) {
