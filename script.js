@@ -24,7 +24,6 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 L.control.scale().addTo(map);
 
 var searchControl = L.esri.Geocoding.geosearch({
-  position: "topright",
   placeholder: "Search the Hartford area...",
   searchBounds: bounds
 }).addTo(map);
