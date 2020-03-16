@@ -23,16 +23,20 @@ attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreet
 
 L.control.scale().addTo(map);
 
-var geocoder = L.Control.Geocoder.nominatim({
-  geocodingQueryParams: {
-    countrycodes: 'us'
-  }
-});
-var control = L.Control.geocoder({
+var searchControl = L.esri.Geocoding.geosearch({
   position: "topright",
   placeholder: "Search the Hartford area...",
-  geocoder: geocoder
+  searchBounds: bounds
 }).addTo(map);
+
+ var results = L.layerGroup().addTo(map);
+
+ searchControl.on('results', function (data) {
+   results.clearLayers();
+   for (var i = data.results.length - 1; i >= 0; i--) {
+     results.addLayer(L.marker(data.results[i].latlng));
+   }
+ });
 
 // town outline layer, with custom pane set to display at lower z-index
 $.getJSON("src/ct-towns-simple.geojson", function (data) {

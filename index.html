@@ -4,10 +4,18 @@
     <title>otl-redlining</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
-    <!-- Load Leaflet from a https CDN, not http. Look for updates at http://leafletjs.com/download.html -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
-      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-      crossorigin=""/>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-5488840-4"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-5488840-4');
+    </script>
+
+    <!-- Load Leaflet CSS from CDN-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -17,29 +25,23 @@
     <div id="legend" style="position:absolute; bottom:20px; right:10px; z-index:500; background-color:#fff">
       <img src="src/holc_legend_inset.png" width="116" height="100" alt="HOLC_legend" style="display:inline"/>
     </div>
-    <!-- Load Leaflet from a https CDN, not http. Look for updates at http://leafletjs.com/download.html -->
-    <<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
-      integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
-      crossorigin=""></script>
+    <!-- Load Leaflet JS from CDN-->
+    <script src="https://unpkg.com/leaflet/dist/leaflet-src.js"></script>
     <!-- load jQuery  -->
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
-    <!-- Load leaflet-geocoder to search locations-->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder@1.8.2/dist/Control.Geocoder.css" />
-    <script src="https://unpkg.com/leaflet-control-geocoder@1.8.2/dist/Control.Geocoder.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+  	integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  	crossorigin="anonymous"></script>
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet"></script>
+    <!-- Esri Leaflet Geocoder -->
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css">
+    <script src="https://unpkg.com/esri-leaflet-geocoder"></script>
     <!-- load Font-Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <!-- Load leaflet.extra-markers from local directory -->
     <link rel="stylesheet" href="markers/leaflet.extra-markers.min.css">
     <script src="markers/leaflet.extra-markers.min.js"></script>
     <script type="text/javascript" src="script.js"></script>
-    <script>
-      // UConn MAGIC Google Analytics tracking code
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-      ga('create', 'UA-4813179-1', 'auto');
-      ga('send', 'pageview');
-    </script>
+
   </body>
 </html>
