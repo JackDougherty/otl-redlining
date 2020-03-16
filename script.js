@@ -21,8 +21,6 @@ new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
 }).addTo(map);
 
-L.control.scale().addTo(map);
-
 var searchControl = L.esri.Geocoding.geosearch({
   placeholder: "Search the Hartford area...",
   searchBounds: bounds
@@ -36,6 +34,8 @@ var searchControl = L.esri.Geocoding.geosearch({
      results.addLayer(L.marker(data.results[i].latlng));
    }
  });
+
+L.control.scale().addTo(map);
 
 // town outline layer, with custom pane set to display at lower z-index
 $.getJSON("src/ct-towns-simple.geojson", function (data) {
