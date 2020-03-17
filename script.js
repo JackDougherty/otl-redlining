@@ -14,17 +14,19 @@ var bounds = L.latLngBounds(minLatLng, maxLatLng);
 map.createPane('towns');
 map.getPane('towns').style.zIndex = 350;
 
-map.attributionControl
-.setPrefix('View <a href="https://github.com/ontheline/otl-redlining" target="_blank">sources and code on GitHub</a>, created with <a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
-
 new L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
 }).addTo(map);
 
 var searchControl = L.esri.Geocoding.geosearch({
   placeholder: "Search the Hartford area...",
   searchBounds: bounds
 }).addTo(map);
+
+// Prepend attribution to "Powered by Esri"
+map.attributionControl.setPrefix('View\
+  <a href="https://github.com/ontheline/otl-redlining" target="_blank">sources and code on GitHub</a>,\
+  created with ' + map.attributionControl.options.prefix);
 
  var results = L.layerGroup().addTo(map);
 
@@ -57,19 +59,20 @@ $.getJSON("src/ct-towns-simple.geojson", function (data) {
 
 // redlining polygons with fillColor
 $.getJSON("polygons.geojson", function (data) {
-  var geoJsonLayer = L.geoJson(data, {
-    style: function (feature) {
-      var fillColor,
-        grade = feature.properties.grade;
-      if (grade == "A") fillColor = "green";
-      else if (grade == "B") fillColor = "#3399ff"; // light blue
-      else if (grade == "C") fillColor = "yellow";
-      else if (grade == "D") fillColor = "red";
-      else fillColor = "gray"; // no data
+
+  var grade2color = {
+    'A': 'green',
+    'B': '#3399ff', // light blue
+    'C': 'yellow',
+    'D': 'red',
+  }
+
+  L.geoJson(data, {
+    style: function (f) {
       return {
         'color': 'black',
         'weight': 2,
-        'fillColor': fillColor,
+        'fillColor': grade2color[ f.properties.grade ] || 'gray', // gray if no data
         'fillOpacity': 0.7
       }
     },
