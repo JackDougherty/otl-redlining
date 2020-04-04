@@ -10,6 +10,9 @@ var minLatLng = [41.711356, -72.802452];
 var maxLatLng = [41.813259, -72.567709];
 var bounds = L.latLngBounds(minLatLng, maxLatLng);
 
+var choroplethLayer;
+var choroplethOpacity = 0.7;
+
 // create custom pane for town layer, set to display below overlay zIndex 400
 map.createPane('towns');
 map.getPane('towns').style.zIndex = 350;
@@ -41,11 +44,11 @@ L.control.scale().addTo(map);
 
 // town outline layer, with custom pane set to display at lower z-index
 $.getJSON("src/ct-towns-simple.geojson", function (data) {
-  var geoJsonLayer = L.geoJson(data, {
+  L.geoJson(data, {
     style: function (feature) {
       return {
-        'color': 'black',
-        'weight': 2,
+        'color': 'gray',
+        'weight': 1,
         fillOpacity: 0
       }
     },
@@ -57,9 +60,7 @@ $.getJSON("src/ct-towns-simple.geojson", function (data) {
   }).addTo(map);
 });
 
-// redlining polygons with fillColor
-$.getJSON("polygons.geojson", function (data) {
-
+var choroplethStyle = function(f) {
   var grade2color = {
     'A': 'green',
     'B': '#3399ff', // light blue
@@ -67,26 +68,31 @@ $.getJSON("polygons.geojson", function (data) {
     'D': 'red',
   }
 
-  L.geoJson(data, {
-    style: function (f) {
-      return {
-        'color': 'black',
-        'weight': 2,
-        'fillColor': grade2color[ f.properties.grade ] || 'gray', // gray if no data
-        'fillOpacity': 0.7
-      }
-    },
+  return {
+    'color': 'black',
+    'weight': 1,
+    'fillColor': grade2color[ f.properties.grade ] || 'gray', // gray if no data
+    'fillOpacity': choroplethOpacity
+  }
+}
+
+// redlining polygons with fillColor
+$.getJSON("polygons.geojson", function (data) {
+  choroplethLayer = L.geoJson(data, {
+    style: choroplethStyle,
     onEachFeature: function( feature, layer) {
       var popupText = "<b>Area " + feature.properties.name + " - " + feature.properties.town + "</b><br />"
          + "<a href='https://ontheline.github.io/otl-redlining/pdf/" + feature.properties.name + ".pdf' target='_blank'>Neighborhood report (PDF in new tab)</a>";
       layer.bindPopup(popupText);
     }
   }).addTo(map);
+
+  map.fitBounds(choroplethLayer.getBounds())
 });
 
 // redlining points with colored numeric markers; see also style.css
 $.getJSON("points.geojson", function (data){
-  var geoJsonLayer = L.geoJson(data, {
+  L.geoJson(data, {
     pointToLayer: function( feature, latlng) {
       var colors = {
         'A': 'green',
@@ -107,3 +113,25 @@ $.getJSON("points.geojson", function (data){
     }
   }).addTo(map);
 });
+
+
+// Add Opacity control
+var opacity = L.control({position: 'bottomleft'});
+opacity.onAdd = function (map) {
+  var div = L.DomUtil.create('div', 'control-custom range');
+  div.innerHTML = '<h4>Opacity</h4>';
+  div.innerHTML += '<input id="rangeSlider" type="range" min="0" max="100" value="70">';
+
+  // Make sure the map doesn't move with slider change
+  L.DomEvent.disableClickPropagation(div);
+  return div;
+};
+opacity.addTo(map);
+
+$('#rangeSlider').on('input', function() {
+  choroplethOpacity = $(this).val() / 100;
+
+  if (choroplethLayer) {
+    choroplethLayer.setStyle(choroplethStyle);
+  }
+})

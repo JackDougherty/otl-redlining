@@ -8,7 +8,7 @@ https://ontheline.github.io/otl-redlining/index-caption.html
 set iframe height 600px
 
 ## Credits and dependencies
-- Thanks @ilyankou for styling
+- Thanks [@ilyankou](https://github.com/ilyankou) for styling & opacity slider
 - Thanks Samir Gambhir, Kirwan Institute for the Study of Race and Ethnicity, Ohio State University, for geo-referencing and digitizing the original map scans.
 - Thanks UConn MAGIC (http://magic.lib.uconn.edu) for the original 2012 Google Maps design (http://magic.lib.uconn.edu/otl/doclink_holc.html), which is replaced by this 2016 Leaflet map
 - Mapzen leaflet geocoder to search locations https://github.com/mapzen/leaflet-geocoder
